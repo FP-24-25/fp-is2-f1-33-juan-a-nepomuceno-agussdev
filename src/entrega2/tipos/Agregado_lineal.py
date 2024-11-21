@@ -6,7 +6,7 @@ Created on 6 nov 2024
 
 from __future__ import annotations
 
-from typing import List, Generic, TypeVar
+from typing import List, Generic, TypeVar, Callable
 from abc import ABC, abstractmethod
 
 E = TypeVar('E')
@@ -25,7 +25,6 @@ class AgregadoLineal(ABC, Generic[E]):
     def elements(self) -> list[E]:
         return self._elements
     
-    
     def add(self, e: E) -> None:
         pass
     
@@ -41,6 +40,20 @@ class AgregadoLineal(ABC, Generic[E]):
         removed = self._elements.copy()
         self._elements.clear()
         return removed
+    
+    # Ejercicio 2: MODIFICACIONES AÑADIDAS PARA LA DEFENSA 2
+    
+    def contains(self, e: E) -> bool:
+        return e in self._elements
+    
+    def find(self, func: Callable[[E], bool]) -> E | None:
+        for element in self._elements:
+            if func(element):
+                return element
+        return None
+    
+    def filter(self, func: Callable[[E], bool]) -> list[E]:
+        return [element for element in self._elements if func(element)]
     
 
 
